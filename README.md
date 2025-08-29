@@ -19,4 +19,3 @@ This project was created for learning and practicing **web development fundament
 ## 🛠️ Tech Stack
 - **HTML5** – semantic structure  
 - **CSS3** – custom styling + responsive design (Flexbox/Grid)  
-- **TypeScript** – lightweight DOM scripting
