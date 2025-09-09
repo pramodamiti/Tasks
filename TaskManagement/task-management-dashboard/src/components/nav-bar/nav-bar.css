@@ -1,0 +1,46 @@
+.nav-container {
+  justify-content: center;
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: #bfddf5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-task input,
+.add-task select,
+.add-task button {
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.sort-task select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.header {
+  background-color: #85abd3;
+  color: white;
+  padding: 1rem;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+.header:hover {
+  box-shadow: 0 8px 20px rgba(90, 202, 196, 0.15);
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+  color: black;
+}
+.task-card {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
