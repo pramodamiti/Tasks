@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+.container {
+  display: flex;
+  border: 2px solid #8edd80;
+  padding: 1rem;
+  gap: 1rem;
+  min-height: 200px;
+}
+
+.container.standard {
+  flex-direction: column;
+}
+
+.container.inverted {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header {
+  background: #5690ba;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.main {
+  background: #9ec96c;
+  padding: 0.5rem;
+  flex: 1;
+  border-radius: 8px;
+}
+
+.footer {
+  background: #c59c5b;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
