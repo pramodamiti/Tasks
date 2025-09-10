@@ -1,4 +1,4 @@
-import { Component, Prop, State, h } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, State, h } from '@stencil/core';
 
 @Component({
   tag: 'task-card',
@@ -6,10 +6,22 @@ import { Component, Prop, State, h } from '@stencil/core';
   shadow: true,
 })
 export class TaskCard {
+  @Prop() taskId: string;
   @Prop() taskTitle: string;
   @Prop() description: string;
   @Prop() priority: string;
-  @State() count: number = 1;
+
+  @Event() deleteTask: EventEmitter<{ taskId: string }>;
+  @Event() editTask: EventEmitter<{ taskId: string }>;
+
+  handleDelete = () => {
+    this.deleteTask.emit({ taskId: this.taskId });
+  };
+
+  handleEdit() {
+    this.editTask.emit({ taskId: this.taskId });
+  }
+
   render() {
     return (
       <div class="background">
@@ -21,10 +33,12 @@ export class TaskCard {
             <b>Priority:</b> {this.priority}
           </p>
           <div class="button">
-            <button id="edit" class="edit">
+            <button class="edit" onClick={() => this.handleEdit()}>
               Edit
             </button>
-            <button class="delete">Delete</button>
+            <button class="delete" onClick={this.handleDelete}>
+              Delete
+            </button>
           </div>
         </div>
       </div>

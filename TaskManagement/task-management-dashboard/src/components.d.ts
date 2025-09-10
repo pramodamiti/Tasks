@@ -6,11 +6,14 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AppRoot {
+    }
     interface NavBar {
     }
     interface TaskCard {
         "description": string;
         "priority": string;
+        "taskId": string;
         "taskTitle": string;
     }
     interface TaskContainer {
@@ -20,7 +23,17 @@ export interface NavBarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLNavBarElement;
 }
+export interface TaskCardCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLTaskCardElement;
+}
 declare global {
+    interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
+    }
+    var HTMLAppRootElement: {
+        prototype: HTMLAppRootElement;
+        new (): HTMLAppRootElement;
+    };
     interface HTMLNavBarElementEventMap {
         "addTask": { title: string; description: string; priority: string };
         "sortTasks": 'Low' | 'Medium' | 'High';
@@ -39,7 +52,19 @@ declare global {
         prototype: HTMLNavBarElement;
         new (): HTMLNavBarElement;
     };
+    interface HTMLTaskCardElementEventMap {
+        "deleteTask": { taskId: string };
+        "editTask": { taskId: string };
+    }
     interface HTMLTaskCardElement extends Components.TaskCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLTaskCardElementEventMap>(type: K, listener: (this: HTMLTaskCardElement, ev: TaskCardCustomEvent<HTMLTaskCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLTaskCardElementEventMap>(type: K, listener: (this: HTMLTaskCardElement, ev: TaskCardCustomEvent<HTMLTaskCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLTaskCardElement: {
         prototype: HTMLTaskCardElement;
@@ -52,24 +77,31 @@ declare global {
         new (): HTMLTaskContainerElement;
     };
     interface HTMLElementTagNameMap {
+        "app-root": HTMLAppRootElement;
         "nav-bar": HTMLNavBarElement;
         "task-card": HTMLTaskCardElement;
         "task-container": HTMLTaskContainerElement;
     }
 }
 declare namespace LocalJSX {
+    interface AppRoot {
+    }
     interface NavBar {
         "onAddTask"?: (event: NavBarCustomEvent<{ title: string; description: string; priority: string }>) => void;
         "onSortTasks"?: (event: NavBarCustomEvent<'Low' | 'Medium' | 'High'>) => void;
     }
     interface TaskCard {
         "description"?: string;
+        "onDeleteTask"?: (event: TaskCardCustomEvent<{ taskId: string }>) => void;
+        "onEditTask"?: (event: TaskCardCustomEvent<{ taskId: string }>) => void;
         "priority"?: string;
+        "taskId"?: string;
         "taskTitle"?: string;
     }
     interface TaskContainer {
     }
     interface IntrinsicElements {
+        "app-root": AppRoot;
         "nav-bar": NavBar;
         "task-card": TaskCard;
         "task-container": TaskContainer;
@@ -79,6 +111,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "task-card": LocalJSX.TaskCard & JSXBase.HTMLAttributes<HTMLTaskCardElement>;
             "task-container": LocalJSX.TaskContainer & JSXBase.HTMLAttributes<HTMLTaskContainerElement>;

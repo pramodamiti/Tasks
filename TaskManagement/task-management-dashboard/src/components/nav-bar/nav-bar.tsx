@@ -8,7 +8,8 @@ import { Component, Event, EventEmitter, h, State } from '@stencil/core';
 export class NavBar {
   @State() title: string = '';
   @State() description: string = '';
-  @State() priority: string = '';
+  @State() priority: string = 'Low';
+  @State() count: number = 1;
 
   @Event() addTask: EventEmitter<{ title: string; description: string; priority: string }>;
   @Event() sortTasks: EventEmitter<'Low' | 'Medium' | 'High'>;
@@ -32,6 +33,7 @@ export class NavBar {
   handleSort(event: Event) {
     const select = event.target as HTMLSelectElement;
     this.sortTasks.emit(select.value as 'Low' | 'Medium' | 'High');
+    this.priority = 'Low';
   }
 
   render() {
@@ -63,7 +65,7 @@ export class NavBar {
             </select>
           </div>
         </div>
-        <div class="task-card">
+        {/* <div class="task-card">
           <task-card task-title="Complete Project" description="Finish the StencilJS project by end of the week." priority="low"></task-card>
           <task-card task-title="Complete Project" description="Finish the StencilJS project by end of the week." priority="medium"></task-card>
           <task-card task-title="Complete Project" description="Finish the StencilJS project by end of the week." priority="high"></task-card>
@@ -72,7 +74,7 @@ export class NavBar {
           <task-card task-title="Complete Project" description="Finish the StencilJS project by end of the week." priority="high"></task-card>
           <task-card task-title="Complete Project" description="Finish the StencilJS project by end of the week." priority="low"></task-card>
           <task-card task-title="Complete Project" description="Finish the StencilJS project by end of the week." priority="high"></task-card>
-        </div>
+        </div> */}
       </div>
     );
   }
