@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+           
+           
+           <bean id="bmw" class="com.rentalSystem.CarRental.Car" scope="prototype" lazy-init="true" init-method="init" destroy-method="cleanup">
+        <constructor-arg value="BMW"/>
+        <constructor-arg value="Petrol"/>
+    </bean>
+
+    <bean id="audi" class="com.rentalSystem.CarRental.Car" scope="prototype" init-method="init" destroy-method="cleanup">
+        <constructor-arg value="Audi"/>
+        <constructor-arg value="Diesel"/>
+    </bean>
+
+    <!-- Customers -->
+    <bean id="john" class="com.rentalSystem.CarRental.Customer" autowire="byName" init-method="init" destroy-method="cleanup">
+        <constructor-arg value="John"/>
+        <constructor-arg ref="bmw"/>
+    </bean>
+
+    <bean id="jane" class="com.rentalSystem.CarRental.Customer" autowire="byName" init-method="init" destroy-method="cleanup">
+        <constructor-arg value="Jane"/>
+        <constructor-arg ref="audi"/>
+    </bean>
+
+
+</beans>
