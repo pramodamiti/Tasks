@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="book1" class="com.libraryManagement.LibraryManagement.Book" scope="prototype">
+        <constructor-arg value="Monk who sold his ferrari"/>
+        <constructor-arg value="Robin Sharma"/>
+        </bean>
+        <bean id="book2" class="com.libraryManagement.LibraryManagement.Book" scope="prototype">
+        <constructor-arg value="Atomic Habbits"/>
+        <constructor-arg value="James Clear"/>
+        </bean>
+  
+        
+        <bean id="library" class="com.libraryManagement.LibraryManagement.Library" init-method="init" destroy-method="destroy">
+        <constructor-arg>
+        <list>
+        <ref bean="book1"/>
+        <ref bean="book2"/>
+        </list>
+        </constructor-arg>
+        
+        </bean>
+               
+         <bean id="pramod" class="com.libraryManagement.LibraryManagement.Member">
+         <!--<property name="name" value="Pramod"></property>
+         <property name="library" ref="library"></property>-->
+         <constructor-arg value="pramod"/>
+         <constructor-arg ref="library"/>
+         </bean>   
+         
+
+</beans>
