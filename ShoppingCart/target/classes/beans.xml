@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+           <bean id="laptop" class="com.shoppingcart.ShoppingCart.Product" scope="prototype">
+           <constructor-arg value="Lenevo ThinkPad"/>
+           <constructor-arg value="100000"/>
+           </bean>
+           <bean id="mouse" class="com.shoppingcart.ShoppingCart.Product" scope="prototype">
+           <constructor-arg value="dell"/>
+           <constructor-arg value="500"/>
+           </bean>
+           <bean id="keyboard" class="com.shoppingcart.ShoppingCart.Product" scope="prototype">
+           <constructor-arg value="keyBoard"/>
+           <constructor-arg value="9999"/>
+           </bean>
+            <bean id="cart" class="com.shoppingcart.ShoppingCart.Cart" init-method="init" destroy-method="destroy">
+        <constructor-arg>
+            <list>
+                <ref bean="laptop"/>
+                <ref bean="mouse"/>
+                <ref bean="keyboard"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="cart1" class="com.shoppingcart.ShoppingCart.Cart" init-method="init" destroy-method="destroy">
+        <constructor-arg>
+            <list>
+                
+                <ref bean="keyboard"/>
+            </list>
+        </constructor-arg>
+    </bean>
+<bean id="john" class="com.shoppingcart.ShoppingCart.Customer">
+        <property name="name" value="John"/>
+        <property name="cart" ref="cart"/>
+    </bean>
+         <bean id="pramod" class="com.shoppingcart.ShoppingCart.Customer">
+         <property name="name" value="pramod"></property>
+         <property name="cart" ref="cart1"></property>
+         
+         </bean> 
+
+
+</beans>
