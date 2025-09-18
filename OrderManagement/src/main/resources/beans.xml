@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+           <bean id="food1" class="com.foodDelivery.OrderManagement.FoodIteam">
+                <constructor-arg value="1"/>
+				<constructor-arg value="Biryani"/>
+				<constructor-arg value="200"/>
+           </bean>
+           <bean id="food2" class="com.foodDelivery.OrderManagement.FoodIteam">
+                <constructor-arg value="2"/>
+				<constructor-arg value="paneer Butter masala"/>
+				<constructor-arg value="180"/>           
+           </bean>
+           <bean id="food3" class="com.foodDelivery.OrderManagement.FoodIteam">
+           		<constructor-arg value="3"/>
+				<constructor-arg value="Butter naan"/>
+				<constructor-arg value="40"/>           
+           </bean>
+           
+           
+           <bean id="resto1" class="com.foodDelivery.OrderManagement.Restaurant">
+           <constructor-arg value="01"/>
+           <constructor-arg value="Spice Dine"/>
+           <constructor-arg>
+           	<list>
+           		<ref bean="food1"/>
+           		<ref bean="food2"/>
+           		<ref bean="food3"/>
+           	</list>
+           </constructor-arg>
+           </bean>
+           
+           <bean id="agent1" class="com.foodDelivery.OrderManagement.DeliveryAgent">
+           <constructor-arg value="01"/>
+           <constructor-arg value="Ramesh"/>
+           <constructor-arg value="+91 9998887766"/>   
+           </bean>
+           
+           
+          <bean id="customer" class="com.foodDelivery.OrderManagement.Customer"/>
+          
+          <bean id="order" class="com.foodDelivery.OrderManagement.Order" init-method="init" destroy-method="cleanup" scope="prototype">
+          
+          <property name="orderId" value="01"></property>
+          <property name="customer" ref="customer" ></property>
+          <property name="restorant" ref="resto1"></property>
+          <!--<property name="food"><list>
+          <ref bean="food1"/>
+          <ref bean="food2"/>
+          <ref bean="food3"/>
+          </list>
+          </property>-->
+          <property name="deliveryAgent" ref="agent1"></property>          
+          </bean>
+          
+          <bean id="orderService" class="com.foodDelivery.OrderManagement.service.OrderService" depends-on="agent1"></bean>
+           
+           
+           
+           
+</beans>

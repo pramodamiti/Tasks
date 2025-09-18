@@ -1,0 +1,90 @@
+Step 1: Setup Project
+
+Create a Maven project (or simple Java project + add Spring Core JARs).
+
+Add spring-context dependency (if Maven).
+
+Create src/main/resources/applicationContext.xml.
+
+Step 2: Define Core Classes (POJOs)
+
+Start simple POJOs with private fields, getters/setters, constructors, and toString().
+
+Customer → id, name, phone, address.
+
+FoodItem → id, name, price.
+
+Restaurant → id, name, List<FoodItem>.
+
+DeliveryAgent → id, name, phone.
+
+Order → orderId, Customer, Restaurant, List<FoodItem>, DeliveryAgent, totalPrice.
+
+Step 3: Configure Beans in applicationContext.xml
+
+Define Customer bean (blank, will set fields at runtime).
+
+Define FoodItem beans.
+
+Define Restaurant bean with list injection of food items.
+
+Define DeliveryAgent bean.
+
+Define Order bean with prototype scope.
+
+Use constructor/setter injection to practice both styles.
+
+Step 4: Create Service Layer
+
+OrderService class → has method placeOrder(Customer, Restaurant, List<FoodItem>).
+
+Calculates bill, assigns delivery agent, returns Order object.
+
+Step 5: MainApp (Interactive with Scanner)
+
+Load Spring context:
+
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+
+Use Scanner to:
+
+Take customer input.
+
+Show menu from Restaurant bean.
+
+Let user choose food items.
+
+Call OrderService.placeOrder(...).
+
+Print order summary.
+
+Step 6: Bean Lifecycle (Optional Enhancement)
+
+Add init-method and destroy-method in Order bean.
+
+Example: init-method="initOrder", destroy-method="closeOrder".
+
+Print messages:
+
+"Order initialized..."
+
+"Order closed...".
+
+Step 7: Run & Refine
+
+Run the app and check if output matches interactive order summary.
+
+Add more restaurants or items via XML (no code changes needed → shows loose coupling).
+
+✅ After completing this, you’ll have:
+
+Dependency Injection (constructor, setter, collections).
+
+Bean scopes (singleton vs prototype).
+
+Autowiring.
+
+Bean lifecycle.
+
+Interactive input + realistic output
