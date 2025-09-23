@@ -16,8 +16,6 @@ export namespace Components {
         "taskId": string;
         "taskTitle": string;
     }
-    interface TaskContainer {
-    }
 }
 export interface NavBarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -70,17 +68,10 @@ declare global {
         prototype: HTMLTaskCardElement;
         new (): HTMLTaskCardElement;
     };
-    interface HTMLTaskContainerElement extends Components.TaskContainer, HTMLStencilElement {
-    }
-    var HTMLTaskContainerElement: {
-        prototype: HTMLTaskContainerElement;
-        new (): HTMLTaskContainerElement;
-    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "nav-bar": HTMLNavBarElement;
         "task-card": HTMLTaskCardElement;
-        "task-container": HTMLTaskContainerElement;
     }
 }
 declare namespace LocalJSX {
@@ -98,13 +89,10 @@ declare namespace LocalJSX {
         "taskId"?: string;
         "taskTitle"?: string;
     }
-    interface TaskContainer {
-    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "nav-bar": NavBar;
         "task-card": TaskCard;
-        "task-container": TaskContainer;
     }
 }
 export { LocalJSX as JSX };
@@ -114,7 +102,6 @@ declare module "@stencil/core" {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "nav-bar": LocalJSX.NavBar & JSXBase.HTMLAttributes<HTMLNavBarElement>;
             "task-card": LocalJSX.TaskCard & JSXBase.HTMLAttributes<HTMLTaskCardElement>;
-            "task-container": LocalJSX.TaskContainer & JSXBase.HTMLAttributes<HTMLTaskContainerElement>;
         }
     }
 }
