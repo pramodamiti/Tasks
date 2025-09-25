@@ -1,5 +1,6 @@
 import { Component, h, State } from '@stencil/core';
 import { Task } from '../../interfaces/task';
+import { fetchTasks, addTask, updateTask, deleteTask } from '../../interfaces/task-service';
 
 @Component({
   tag: 'app-root',
@@ -9,41 +10,45 @@ import { Task } from '../../interfaces/task';
 export class AppRoot {
   @State() tasks: Task[] = [];
 
-  handleDeleteTask = (taskId: string) => {
-    this.tasks = this.tasks.filter(task => task.id !== taskId);
+  async componentWillLoad() {
+    this.tasks = await fetchTasks();
+  }
 
-    console.log(this.tasks);
+  handleDeleteTask = async (taskId: string) => {
+    await deleteTask(taskId);
+    this.tasks = this.tasks.filter(task => task.id !== taskId);
+    this.componentWillLoad();
   };
 
-  handleEditTask(taskId: string) {
+  async handleEditTask(taskId: string) {
     const task = this.tasks.find(task => task.id === taskId);
     if (task) {
       const newTitle = prompt('Edit Title', task.title);
-      if (newTitle !== null && newTitle.trim() !== '') {
-        task.title = newTitle;
-        this.tasks = [...this.tasks];
-      }
       const newDescription = prompt('Edit Description', task.description);
-      if (newDescription !== null) {
-        task.description = newDescription;
-        this.tasks = [...this.tasks];
-      }
-      const newPriority = prompt('Edit Priority (Low, Medium, High)', task.priority.toLowerCase());
-      if (newPriority !== null && ['Low', 'Medium', 'High'].includes(newPriority)) {
-        task.priority = newPriority as 'Low' | 'Medium' | 'High';
-        this.tasks = [...this.tasks];
-      }
+      const newPriority = prompt('Edit Priority (Low, Medium, High)', task.priority);
+
+      const updated: Task = {
+        ...task,
+        title: newTitle || task.title,
+        description: newDescription || task.description,
+        priority: (['Low', 'Medium', 'High'].includes(newPriority || '') ? newPriority : task.priority) as 'Low' | 'Medium' | 'High',
+      };
+
+      const saved = await updateTask(taskId, updated);
+      this.tasks = this.tasks.map(t => (t.id === taskId ? saved : t));
+      this.componentWillLoad();
     }
   }
 
-  handleAddTask = (event: CustomEvent<{ title: string; description: string; priority: string }>) => {
-    const newTask: Task = {
-      id: `task-${Date.now()}`,
+  handleAddTask = async (event: CustomEvent<{ title: string; description: string; priority: string }>) => {
+    const newTask: Omit<Task, 'id'> = {
       title: event.detail.title,
       description: event.detail.description,
       priority: event.detail.priority as 'Low' | 'Medium' | 'High',
     };
-    this.tasks = [...this.tasks, newTask];
+    const saved = await addTask(newTask);
+    this.tasks = [...this.tasks, saved];
+    this.componentWillLoad();
   };
 
   handleSortTasks = (event: CustomEvent<'Low' | 'Medium' | 'High'>) => {
